@@ -112,3 +112,9 @@ body {
   .todo.completed .left p {
     text-decoration: line-through; /* Optional: Add a line-through for completed items */
   }
+
+  .deleteAll {
+    margin-top: 10px;
+    cursor: pointer; /* Cursor style */
+  }
+  

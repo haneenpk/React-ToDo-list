@@ -1,5 +1,7 @@
+// App.js
 import React, { useState } from 'react';
 import './App.css';
+import AddToDo from './AddToDo';
 
 function App() {
   const [toDos, setToDos] = useState([]);
@@ -21,6 +23,10 @@ function App() {
     setToDos((prevToDos) => prevToDos.filter((obj) => obj.id !== id));
   };
 
+  const handleDeleteAll = () => {
+    setToDos([]);
+  };
+
   const handleAddToDo = () => {
     const newTodoText = toDo.trim().toLowerCase();
     const isDuplicate = toDos.some((todo) => todo.text.toLowerCase() === newTodoText);
@@ -30,7 +36,7 @@ function App() {
       setToDo('');
       setErrorMessage(''); // Clear the error message
     } else {
-      setErrorMessage('Already exist');
+      setErrorMessage('Already exists');
     }
   };
 
@@ -63,26 +69,12 @@ function App() {
         <i onClick={handleAddToDo} className="fas fa-plus"></i>
       </div>
       {errorMessage && <p className="error" style={{ color: 'red', textAlign: 'center' }}>{errorMessage}</p>}
-      <div className="todos">
-        {toDos.map((obj) => (
-          <div className={`todo ${obj.status ? 'completed' : ''}`} key={obj.id}>
-            <div className="left">
-              <input
-                onChange={(e) => handleCheckboxChange(obj.id, e.target.checked)}
-                value={obj.status}
-                type="checkbox"
-              />
-              <p>{obj.text}</p>
-            </div>
-            <div className="right">
-              <i
-                onClick={() => handleDeleteClick(obj.id)}
-                className="fas fa-times"
-              ></i>
-            </div>
-          </div>
-        ))}
-      </div>
+      <AddToDo
+        toDos={toDos}
+        handleCheckboxChange={handleCheckboxChange}
+        handleDeleteClick={handleDeleteClick}
+        handleDeleteAll={handleDeleteAll}
+      />
     </div>
   );
 }
